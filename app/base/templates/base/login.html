@@ -1,0 +1,52 @@
+{% extends 'base/base_login.html' %}
+
+{% block formulario %}
+<form class="user" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp"
+            placeholder="Ingrese usuario..." name='username' id='username'>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name='password' id='password'>
+    </div>
+
+    <button class="btn btn-primary btn-block" type="submit"> Acceder </button>
+  
+
+</form>
+{% endblock %}
+
+
+{% block javascript %}
+
+            <script>
+            
+            {%if form.errors %}
+
+            {% for field in form %}
+                {% if field.errors %}
+
+                {% for error in field.errors %}
+                mensaje1('{{error|escape}}','red');
+                    //{{error|escape}}
+                {% endfor %}
+
+                {% endif %}
+            {% endfor %}
+
+            {%if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                mensaje1('{{error|escape}}','red');                        
+            //{{error|escape}} 
+                {% endfor %}
+            {% endif %}
+
+
+            {% endif %}
+
+
+
+            </script>
+
+{% endblock %}
