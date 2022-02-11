@@ -42,7 +42,8 @@
                   <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td>
                   <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
                   <td>
-                    <a href="#" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
+                    <a href="{% url 'inv:categoria_edit' item.id  %}" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
+                   
                     <a href="#" class="btn btn-danger btn-circle" role="button"><i class="far fa-trash-alt"></i></a>
                   </td>
               </tr>
@@ -54,8 +55,15 @@
   </div>
 
 
-  
-
 {% endblock %}
 
-{% block javascript %} {% endblock %}
+{% block javascript %}
+
+<script>
+  // Call the dataTables jQuery plugin
+  $(document).ready(function() {
+    $('.table').DataTable();
+  });
+</script>
+
+{% endblock %}
