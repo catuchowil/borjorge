@@ -1,3 +1,4 @@
+from enum import unique
 from tabnanny import verbose
 from django.db import models
 
@@ -18,4 +19,22 @@ class Categoria(ClaseModelo):
         verbose_name_plural = "Categorias"
         ordering = ['descripcion']
 
-        
+
+
+class SubCategoria(ClaseModelo):
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    descripcion = models.CharField('Descripción de la SubCategoría', max_length=100)
+
+    def __str__(self):
+        return '{}:{}'.format(self.categoria.descripcion, self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(SubCategoria, self).save() 
+    
+    class Meta:
+        verbose_name_plural = "Sub Categorias"
+        unique_together = ('categoria','descripcion')
+
+
+
