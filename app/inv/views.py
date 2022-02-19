@@ -50,6 +50,10 @@ class CategoriaDel(LoginRequiredMixin,generic.DeleteView):
     success_url = reverse_lazy('inv:categoria_list')
 
 
+###########################################################
+##- Subcategorias
+##########################################################
+
 
 class SubCategoriaView(LoginRequiredMixin,generic.ListView):
     model = SubCategoria
@@ -70,3 +74,23 @@ class SubCategoriaNew(LoginRequiredMixin,generic.CreateView):
     def form_valid(self,form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
+
+
+class SubCategoriaEdit(LoginRequiredMixin,generic.UpdateView):
+    model = SubCategoria
+    template_name = 'inv/subcategoria_form.html'
+    context_object_name = 'obj'
+    form_class = SubCategoriaForm
+    success_url = reverse_lazy('inv:subcategoria_list')
+    login_url = 'base:login'
+
+    def form_valid(self,form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+
+class SubCategoriaDel(LoginRequiredMixin,generic.DeleteView):
+    model = SubCategoria
+    template_name = 'inv/catalogos_del.html'
+    contex_object_name = 'obj'
+    success_url = reverse_lazy('inv:subcategoria_list')
