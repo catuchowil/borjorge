@@ -76,6 +76,7 @@
                         <a class="collapse-item" href="{% url 'inv:subcategoria_list' %}">Sub Categorías</a>
                         <a class="collapse-item" href="{% url 'inv:marca_list' %}">Marca</a>
                         <a class="collapse-item" href="{% url 'inv:um_list' %}">Unidad Medida</a>
+                        <a class="collapse-item" href="{% url 'inv:producto_list' %}">Producto</a>
                     </div>
                 </div>
             </li>
@@ -424,6 +425,8 @@
         </div>
     </div>
 
+    <div class="modal fade" id="popup"></div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'base/vendor/jquery/jquery.min.js'%}"></script>
     <script src="{% static 'base/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
@@ -437,6 +440,58 @@
     <!-- Page level plugins -->
   <script src="{% static 'base/vendor/datatables/jquery.dataTables.min.js'%}"></script>
   <script src="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+  {% block control_modal%}
+  
+  <script>
+    function abrir_modal(url)
+    {
+
+      $("#popup").load(url, function(){
+        $(this).modal({
+          backdrop:'static',
+          keyboard: false
+        })
+        $(this).modal('show');
+      });
+      return false;
+    }
+
+    function cerrar_modal()
+    {
+      $('#popup').modal('hide');
+      return false;
+    }
+
+    function mensaje(msg,color='green')
+    {
+      if (color=="success")
+      {
+        color="green";
+      }
+      if (color=="error")
+      {
+        color="red";
+      }
+
+
+      $.alert({
+        title:'',
+        theme:'material',
+        type:color,
+        content:msg
+      });
+    }
+
+    {% if messages %}
+      {% for message in messages %}
+        console.log("{{ message.tags }}");
+        mensaje("{{ message }}","{{ message.tags }}");
+      {% endfor %}
+    {% endif %}
+
+  </script>
+  {% endblock%}
 
     {% block ventana %} {% endblock %}
 
