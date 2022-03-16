@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 import datetime
+from django.db.models import Sum
 
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -186,6 +187,19 @@ def compras(request,compra_id=None):
 
 
     return render(request, template_name, contexto)
+
+
+
+
+class CompraDetDelete(SinPrivilegios, generic.DeleteView):
+    permission_required = "cmp.delete_comprasdet"
+    model = ComprasDet
+    template_name = "cmp/compras_det_del.html"
+    context_object_name = 'obj'
+    
+    def get_success_url(self):
+          compra_id=self.kwargs['compra_id']
+          return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
 
 
 
